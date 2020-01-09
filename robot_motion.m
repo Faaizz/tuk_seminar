@@ -128,7 +128,7 @@ while (obs_counter <= no_of_obstacles)
 end
 
 % Plot Universal Potential for obstacles
-subplot(2, 2, 1);
+subplot(1, 2, 1);
 mesh(x_plot, y_plot, z_plot_uni);
 title('Universal Potential Field');
 xlabel("x-axis (fixed earth)");
@@ -148,14 +148,14 @@ legend([pos_plot goal_plot], "Start Position", "Goal Position");
 legend("Location", "northwest");
 
 % Initialize trajectory. Preallocate zeros to optimize run speed
-trajectory= zeros(4, 1000);
+trajectory= zeros(3, 1000);
 
 % Initailize timestep
 trajectory_index= 1;    
 timestep= trajectory_index-1;
 
 % Plot Universal Potential upon which planned path will be plotted
-subplot(2, 2, 2);
+subplot(1, 2, 2);
 mesh(x_plot, y_plot, z_plot_uni);
 title('Path Planning (Gradient Descent)');
 xlabel("x-axis (fixed earth)");
@@ -242,10 +242,7 @@ while 1
     % Update timestep
     trajectory_index= trajectory_index + 1;
     timestep= timestep + 1;
-    
-    % Log yaw into trajectory
-    trajectory= add_yaw_to_trajectory(trajectory, trajectory_index, X_robot);
-    
+ 
     % Plot Robot Position and corresponding Universal Potential
     plot3(X_robot(1), X_robot(2), Uuni, '*k', 'MarkerSize', 10);
     

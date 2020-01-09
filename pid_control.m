@@ -63,27 +63,6 @@ t_traj= trajectory(1,:);
 ref_traj= timeseries(trajectory(2,:), trajectory(1,:), 'Name', 'reference_input');
 
 
-%% SIMULATE SYSTEM RESPONSE (TRANSFER FUNCTION MODEL)
-
-x_robot_pos= lsim(robot_sys_tf, x_traj, t_traj);
-
-% Plot reference trajectory and system output against time
-subplot(2, 2, [3,4]);
-
-% Reference Trajectory
-plot( t_traj, x_traj, '--b');
-title("Lateral Position of Robot");
-xlabel("time");
-ylabel("x-axis (fixed earth)");
-hold on
-% Robot Actual Position
-plot( t_traj, x_robot_pos, 'k'); 
-
-legend("Reference Position", "Actual Position");
-legend("Location", "northwest");
-hold off
-
-
 %% SIMULATE SYSTEM RESPONSE (STATE SPACE)
 
 % Set simulation time
