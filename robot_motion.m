@@ -34,7 +34,7 @@ A_MAX= 0.4;   % m/sec^2
 rol_not= V_MAX/(2*A_MAX);
 
 % Stopping Criteria
-stopping_criteria= 0.3;   % Stop when Attractive Potential is at/lower than this value
+stopping_criteria= 0.2;   % Stop when Attractive Potential is at/lower than this value
 
 % Robot Size Alllowance
 robot_size_allowance= 1.50; % 150 cm
@@ -148,7 +148,7 @@ legend([pos_plot goal_plot], "Start Position", "Goal Position");
 legend("Location", "northwest");
 
 % Initialize trajectory. Preallocate zeros to optimize run speed
-trajectory= zeros(3, 1000);
+trajectory= zeros(4, 1000);
 
 % Initailize timestep
 trajectory_index= 1;    
@@ -229,7 +229,7 @@ while 1
     Funi= Fa + Fr;
     
     % Log Current Robot Position into trajectory
-    trajectory(:,trajectory_index)= [(timestep*h) X_robot(1) X_robot(2)]';
+    trajectory(1:3,trajectory_index)= [(timestep*h) X_robot(1) X_robot(2)]';
     %fprintf( 'Robot position: [%.2f,%.2f]\n\n', X_robot(1), X_robot(2) );
 
     
@@ -242,6 +242,9 @@ while 1
     % Update timestep
     trajectory_index= trajectory_index + 1;
     timestep= timestep + 1;
+    
+    % Log yaw into trajectory
+    trajectory= add_yaw_to_trajectory(trajectory, trajectory_index, X_robot);
     
     % Plot Robot Position and corresponding Universal Potential
     plot3(X_robot(1), X_robot(2), Uuni, '*k', 'MarkerSize', 10);

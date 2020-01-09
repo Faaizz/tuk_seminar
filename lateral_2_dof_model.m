@@ -1,4 +1,4 @@
-function [sys_d_tf_cl, sys_d_ss]= lateral_2_dof_model(h, D)
+function [sys_d_tf_cl, sys_d_ss]= lateral_2_dof_model(h, v, D)
 
 % This function returns:
 % 1- A Closed loop Discrete time Transfer Function model with a PID cntroller
@@ -6,6 +6,7 @@ function [sys_d_tf_cl, sys_d_ss]= lateral_2_dof_model(h, D)
 
 % PARAMETERS
 % h- sampling period
+% v- robot velocity
 % D- PID Controller
 
 
@@ -20,7 +21,7 @@ C_f= 710;
 % Rear tyre cornering stiffness(N/deg)
 C_r= 710;
 % Forward velocity (longitudinal)(m.s^-1)
-v= 2;
+%v= 2;
 % Longitudinal distance of front wheel from center of mass(m)
 l_f= 0.70;
 % Longitudinal distance of back wheels from center of mass(m)

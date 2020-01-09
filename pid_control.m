@@ -32,14 +32,16 @@ Kd= 5.6913;
 % PID Controller
 D= pid(Kp, Ki, Kd);
 
+
+% Robot Longitudinal Velocity (m.s^-1)
+robot_vel= 5;
+
 % Lateral model
-[robot_sys_tf, robot_sys_ss]= lateral_2_dof_model(h, D);
+[robot_sys_tf, robot_sys_ss]= lateral_2_dof_model(h, robot_vel, D);
 
 
 %% OBTAIN TRAJECTORY
 
-% Robot Longitudinal Velocity (m.s^-1)
-robot_vel= 5;
 
 % Robot Initial Position
 robot_init_pos= [0 50]';
