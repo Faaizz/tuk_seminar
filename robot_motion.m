@@ -16,28 +16,28 @@ function trajectory= robot_motion(robot_vel, robot_pos, h)
 %% Constant Definition
 
 % Attractive Potential Constant
-k_att= 1;
+k_att= 0.1;
 
 % Repulsive Potential Constant
-k_rep= 500;
+k_rep= 100;
 
 % Obstacle Radius (Assuming circular obstacle of constant radius)
-obs_radius= 2;
+obs_radius= 1;
 
 % Maximum Longitudinal Velocity
 V_MAX= robot_vel;  % m/sec
 
 % Maximum Longitudinal Deceleration
-A_MAX= 0.4;   % m/sec^2
+A_MAX= 0.2;   % m/sec^2
 
 % Obstacle Influence Range
-rol_not= V_MAX/(2*A_MAX);
+rol_not= 100*V_MAX/(2*A_MAX);
 
 % Stopping Criteria
 stopping_criteria= 0.2;   % Stop when Attractive Potential is at/lower than this value
 
 % Robot Size Alllowance
-robot_size_allowance= 1.50; % 150 cm
+robot_size_allowance= 1.5; % 150 cm
 
 %% Define Goal
 X_goal= [40 5]';
@@ -63,7 +63,7 @@ obstacles= [ [14.87 33.28]' [32 30]' [19 19]' [34.49 17.25]' ];
 %% Plot Universal Potential
 
 % Maximum Repulsive Potential
-max_rep_pot= max(max(z_plot_att));
+max_rep_pot= max(max(z_plot_att/2));
 
 % Initialize to Attractive Potential
 z_plot_uni= z_plot_att;

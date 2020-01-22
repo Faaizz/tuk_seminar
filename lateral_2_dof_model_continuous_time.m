@@ -1,4 +1,4 @@
-function [sys_c, sys_d_ss]= lateral_2_dof_model(h, v, D)
+function sys_c= lateral_2_dof_model_continuous_time(h, v, D)
 
 % This function returns:
 % 1- A Closed loop Discrete time Transfer Function model with a PID cntroller
@@ -53,17 +53,17 @@ A_c= [ A_1; A_2; A_3; A_4 ];
 B_c= [0; (C_f/(m*v)); 0; (l_f*C_f)/(I_zz)];
 
 % Continuous time Output Matrix
-C_c= [ 1 0 0 0; 0 0 0 1 ];
+C_c= [ 1 0 0 0];
 
 % Continuous time Feedthrough Matrix
-D_c= [0 0]';
+D_c= 0;
 
 % Continuous Time System
 sys_c= ss(A_c, B_c, C_c, D_c);
 
 sys_c.InputName= 'Front Wheel Angle';
 sys_c.StateName= { 'Lateral Displacement of CoM', 'Side-slip Angle', 'Yaw Angle', 'Yaw Velocity' };
-sys_c.OutputName= {'Lateral Displacement of CoM', 'Yaw Velocity'};
+sys_c.OutputName= {'Lateral Displacement of CoM'};
 
 
 

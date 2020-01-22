@@ -11,7 +11,7 @@ clc;
 % Y_AXIS: 0...50
 
 % Sampling period
-h= 0.2;
+h= 0.1;
 
 
 %% OBTAIN MODEL
@@ -34,7 +34,7 @@ D= pid(Kp, Ki, Kd);
 
 
 % Robot Longitudinal Velocity (m.s^-1)
-robot_vel= 5;
+robot_vel= 3;
 
 % Lateral model
 [robot_sys_tf, robot_sys_ss]= lateral_2_dof_model(h, robot_vel, D);

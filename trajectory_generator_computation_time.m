@@ -4,7 +4,7 @@
 %% CONSTANTS
 
 % Robot velocity (m/s)
-rob_vel= 4;
+rob_vel= 2;
 
 % Configuration space
 min_x= 0;
