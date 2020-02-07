@@ -18,7 +18,7 @@ h= 0.1;
 
 
 % Robot Longitudinal Velocity (m.s^-1)
-robot_vel= 3;
+robot_vel= 1;
 
 % Lateral model
 robot_sys_ss= lateral_2_dof_model_continuous_time(h, robot_vel, 0);
@@ -78,10 +78,14 @@ mpcobj.Weights.OutputVariables= 5;
 
 %% SIMULATE SYSTEM RESPONSE (STATE SPACE)
 
+% Open simulink model
+open_system('mpc_control_sim.slx');
+
 % Set simulation time
-set_param('mpc_control_sim', 'StopTime', string(max(t_traj)));
+sim_out= sim('mpc_control_sim', max(t_traj));
 
-
+%% PLOT CONTROLLED MOTION
+robot_controlled_motion;
 
 
 

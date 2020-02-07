@@ -34,7 +34,8 @@ D= pid(Kp, Ki, Kd);
 
 
 % Robot Longitudinal Velocity (m.s^-1)
-robot_vel= 3;
+
+robot_vel= 1;
 
 % Lateral model
 [robot_sys_tf, robot_sys_ss]= lateral_2_dof_model(h, robot_vel, D);
@@ -65,10 +66,14 @@ ref_traj= timeseries(trajectory(2,:), trajectory(1,:), 'Name', 'reference_input'
 
 %% SIMULATE SYSTEM RESPONSE (STATE SPACE)
 
+% Open simulink model
+open_system('pid_control_sim.slx');
+
 % Set simulation time
-set_param('pid_control_sim', 'StopTime', string(max(t_traj)));
+sim_out= sim('pid_control_sim', max(t_traj));
 
-
+%% PLOT CONTROLLED MOTION
+robot_controlled_motion;
 
 
 

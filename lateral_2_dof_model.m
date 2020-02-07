@@ -13,19 +13,25 @@ function [sys_c, sys_d_ss]= lateral_2_dof_model(h, v, D)
 %% CONSTANTS
 
 % Mass(kg)
-m= 1010;
+mass= 505;
+assignin('base','mass',mass);
 % Yaw mass moment of Inertia(kg.m^2)
-I_zz= 1617;
+I_zz= 808.5;
+assignin('base','I_zz',I_zz);
 % Front tyre cornering stiffness(N/deg)
-C_f= 710;
+%C_f= 18e3*(180/pi);
+C_f= 1420;
+assignin('base','C_f',C_f);
 % Rear tyre cornering stiffness(N/deg)
-C_r= 710;
-% Forward velocity (longitudinal)(m.s^-1)
-%v= 2;
+%C_r= 15e3*(180/pi);
+C_r= 1420;
+assignin('base','C_r',C_r);
 % Longitudinal distance of front wheel from center of mass(m)
-l_f= 0.70;
+l_f= 0.35;
+assignin('base','l_f',l_f);
 % Longitudinal distance of back wheels from center of mass(m)
-l_r= 0.85;
+l_r= 0.4125;
+assignin('base','l_r',l_r);
 
 %% STATE SPACE REPRESENTATION
 
@@ -42,7 +48,7 @@ l_r= 0.85;
 
 % State Matrix
 A_1= [ 0 v  v  0];
-A_2= [ 0 -((C_f + 2*C_r) / (m*v)) 0 (((2*l_r*C_r - l_f*C_f)/(m*(v^2))) -1 )];
+A_2= [ 0 -((C_f + 2*C_r) / (mass*v)) 0 (((2*l_r*C_r - l_f*C_f)/(mass*(v^2))) -1 )];
 A_3= [ 0 0 0 1];
 A_4= [ 0 ((2*l_r*C_r - l_f*C_f)/I_zz) 0 -((2*(l_r^2)*C_r + (l_f^2)*C_f)/(I_zz*v))];
 
@@ -50,7 +56,7 @@ A_4= [ 0 ((2*l_r*C_r - l_f*C_f)/I_zz) 0 -((2*(l_r^2)*C_r + (l_f^2)*C_f)/(I_zz*v)
 A_c= [ A_1; A_2; A_3; A_4 ];
 
 % Continuous time Input Matrix
-B_c= [0; (C_f/(m*v)); 0; (l_f*C_f)/(I_zz)];
+B_c= [0; (C_f/(mass*v)); 0; (l_f*C_f)/(I_zz)];
 
 % Continuous time Output Matrix
 C_c= [ 1 0 0 0; 0 0 0 1 ];

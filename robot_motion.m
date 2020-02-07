@@ -19,10 +19,11 @@ function trajectory= robot_motion(robot_vel, robot_pos, h)
 k_att= 0.1;
 
 % Repulsive Potential Constant
-k_rep= 100;
+k_rep= 10;
 
-% Obstacle Radius (Assuming circular obstacle of constant radius)
+% Obstacle Radius (Assuming circular obstacle of constant radius) (m)
 obs_radius= 1;
+assignin('base', 'obs_radius', obs_radius);
 
 % Maximum Longitudinal Velocity
 V_MAX= robot_vel;  % m/sec
@@ -31,13 +32,14 @@ V_MAX= robot_vel;  % m/sec
 A_MAX= 0.2;   % m/sec^2
 
 % Obstacle Influence Range
-rol_not= 100*V_MAX/(2*A_MAX);
+rol_not= V_MAX/(2*A_MAX);
 
 % Stopping Criteria
-stopping_criteria= 0.2;   % Stop when Attractive Potential is at/lower than this value
+stopping_criteria= 0.05;   % Stop when Attractive Potential is at/lower than this value
 
 % Robot Size Alllowance
 robot_size_allowance= 1.5; % 150 cm
+
 
 %% Define Goal
 X_goal= [40 5]';
@@ -58,7 +60,8 @@ z_plot_att= 0.5 .* k_att .* ( (x_plot-X_goal(1)).^2 + (y_plot-X_goal(2)).^2 );
 
 
 %% Define Obstacle Positions
-obstacles= [ [14.87 33.28]' [32 30]' [19 19]' [34.49 17.25]' ];
+obstacles= [ [14.87 33.28]' [32 30]' [19 19]' [34.49 17.25]' [27 18]' ];
+assignin('base', 'obstacles', obstacles);
 
 %% Plot Universal Potential
 
@@ -164,6 +167,10 @@ ylabel("y-axis (fixed earth)");
 hold on
 
 %% Forever Loop
+
+iteration_count= 0;
+max_iterations= 15000;
+
 while 1
    
     % Calculate Attractive Potential and Force
@@ -221,6 +228,13 @@ while 1
     
     % Check if stopping criteria is satisfied
     if(Ua <= stopping_criteria)
+        % break the forever loop
+        break;
+    end
+    
+    iteration_count= iteration_count+1;
+    % Check if maximum number of iterations has been reached
+    if(iteration_count >= max_iterations)
         % break the forever loop
         break;
     end
