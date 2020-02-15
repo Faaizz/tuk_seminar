@@ -1,43 +1,27 @@
 % THIS SCRIPT IMPLEMENTS A MPC CONTROLLER FOR TRAJECTORY TRACKING OF ROBOT
 % MOTION
 
-%% Clear workspace
-clear;
-clc;
-
 
 %% CONFIGURATION SPACE
 % X-AXIS: 0...50
 % Y_AXIS: 0...50
 
-% Sampling period
-h= 0.1;
-
 
 %% OBTAIN MODEL
 
-
-% Robot Longitudinal Velocity (m.s^-1)
-robot_vel= 1;
-
 % Lateral model
-robot_sys_ss= lateral_2_dof_model_continuous_time(h, robot_vel, 0);
+robot_sys_ss= lateral_2_dof_model(robot_vel, mass, I_zz, C_f, C_r, l_f, l_r);
 
 robot_sys_ss= c2d(robot_sys_ss, h);
 
 
 %% OBTAIN TRAJECTORY
 
-
-% Robot Initial Position
-robot_init_pos= [0 50]';
-
-% subplot(2, 2, 1);
-
 % Appropraite Subplot to plot for potential field and planned robot path
 % specified in robot_motion.m
 
-trajectory= robot_motion(robot_vel, robot_init_pos, h);
+%trajectory= robot_motion(robot_vel, robot_init_pos, h);
+trajectory= trajectory_generator_apf(robot_vel, robot_init_pos, h);
 
 % Get lateral coordinates
 x_traj= trajectory(2,:);
@@ -52,8 +36,8 @@ ref_traj= timeseries(trajectory(2,:), trajectory(1,:), 'Name', 'reference_input'
 %% MPC
 
 % Prediction horizon
-prediction_horizon= 10;
-control_horizon= 5;
+prediction_horizon= 150;
+control_horizon= 50;
 
 mpcobj = mpc(robot_sys_ss, h);
 mpcobj.PredictionHorizon= prediction_horizon;
@@ -61,31 +45,67 @@ mpcobj.ControlHorizon= control_horizon;
 
 % INPUT CONSTRAINTS
 % Maxmimum rate of change of wheel angle
-max_delta_u= 40;    %(deg/sec)
+max_delta_u= 30*(pi/180);    %(rad/sec)
 mpcobj.ManipulatedVariables.RateMin= -max_delta_u*h;
 mpcobj.ManipulatedVariables.RateMax= max_delta_u*h;
 
 % Maximum wheel angle
-max_u= 40;  %(deg)
+max_u= 40*(pi/180);  %(rad)
 mpcobj.ManipulatedVariables.Min= -max_u;
 mpcobj.ManipulatedVariables.Max= max_u;
 
 % Output weight
-mpcobj.Weights.OutputVariables= 5;
+%mpcobj.Weights.OutputVariables= 100;
 
 
 
 
 %% SIMULATE SYSTEM RESPONSE (STATE SPACE)
 
-% Open simulink model
-open_system('mpc_control_sim.slx');
+% % Open simulink model
+% open_system('mpc_control_sim.slx');
+% % Set simulation time
+% set_param('mpc_control_sim', 'StopTime', string(max(t_traj)));
+% % Run simulation
 
+
+% Open simulink model
+open_system('dyn_mpc_control_sim.slx');
 % Set simulation time
-sim_out= sim('mpc_control_sim', max(t_traj));
+set_param('dyn_mpc_control_sim', 'StopTime', string(max(t_traj)));
+% Run simulation
+sim_out= sim('dyn_mpc_control_sim', max(t_traj));
+
+
+
 
 %% PLOT CONTROLLED MOTION
-robot_controlled_motion;
+%robot_controlled_motion;
 
+% Control signal
+VehicleModel.deltaf= sim_out.control_signal{1}.Values.Data;
+
+simulator = VehicleDynamicsLateral.Simulator(VehicleModel, trajectory(1,:));
+
+% Setup initial conditions
+simulator.ALPHAT0 = 0;           
+simulator.dPSI0 = 0;             
+simulator.V0= robot_vel; 
+simulator.PSI0= yaw_ang_init;
+
+% Retrieving states from Simulink model
+simulator.XT = sim_out.states{1}.Values.Data;
+simulator.YT = sim_out.states{2}.Values.Data;
+simulator.PSI = sim_out.states{3}.Values.Data;
+simulator.VEL = sim_out.states{4}.Values.Data;
+simulator.ALPHAT = sim_out.states{5}.Values.Data;
+simulator.dPSI = sim_out.states{6}.Values.Data;
+
+
+g = VehicleDynamicsLateral.Graphics(simulator);
+g.TractorColor = 'r';
+
+g.Frame();
+%g.Animation();
 
 

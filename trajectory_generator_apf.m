@@ -16,36 +16,33 @@ function trajectory= trajectory_generator_apf(robot_vel, robot_pos, h)
 %% Constant Definition
 
 % Attractive Potential Constant
-k_att= 1;
+k_att= evalin('base','k_att');
 
 % Repulsive Potential Constant
-k_rep= 500;
+k_rep= evalin('base','k_rep');
 
-% Obstacle Radius (Assuming circular obstacle of constant radius)
-obs_radius= 2;
+% Obstacle Radius (Assuming circular obstacle of constant radius) (m)
+obs_radius= evalin('base','obs_radius');
 
 % Maximum Longitudinal Velocity
-V_MAX= robot_vel;  % m/sec
-
-% Maximum Longitudinal Deceleration
-A_MAX= 0.4;   % m/sec^2
+V_MAX= evalin('base','V_MAX'); 
 
 % Obstacle Influence Range
-rol_not= V_MAX/(2*A_MAX);
+rol_not= evalin('base','rol_not');
 
 % Stopping Criteria
-stopping_criteria= 0.005;   % Stop when Attractive Potential is at/lower than this value
+stopping_criteria= evalin('base','stopping_criteria');
 
 % Robot Size Alllowance
-robot_size_allowance= 1.50; % 150 cm
+robot_size_allowance= evalin('base','robot_size_allowance');
+
 
 %% Define Goal
-X_goal= [40 5]';
+X_goal= evalin('base','X_goal');
 
 
 %% Define Obstacle Positions
-obstacles= [ [14.87 33.28]' [32 30]' [19 19]' [34.49 17.25]' ];
-
+obstacles= evalin('base','obstacles');
 % Get number of obstacles (number of columns of *obstacles*)
 size_of_obstacles= size(obstacles);
 no_of_obstacles= size_of_obstacles(2);
@@ -162,6 +159,7 @@ end
 % Set all zero columns to empty vectors, effectively removing them from the
 % array
 trajectory( :, all(~trajectory,1) )= [];
+
 
 end
 

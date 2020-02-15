@@ -16,33 +16,29 @@ function trajectory= robot_motion(robot_vel, robot_pos, h)
 %% Constant Definition
 
 % Attractive Potential Constant
-k_att= 0.1;
+k_att= evalin('base','k_att');
 
 % Repulsive Potential Constant
-k_rep= 10;
+k_rep= evalin('base','k_rep');
 
 % Obstacle Radius (Assuming circular obstacle of constant radius) (m)
-obs_radius= 1;
-assignin('base', 'obs_radius', obs_radius);
+obs_radius= evalin('base','obs_radius');
 
 % Maximum Longitudinal Velocity
-V_MAX= robot_vel;  % m/sec
-
-% Maximum Longitudinal Deceleration
-A_MAX= 0.2;   % m/sec^2
+V_MAX= evalin('base','V_MAX'); 
 
 % Obstacle Influence Range
-rol_not= V_MAX/(2*A_MAX);
+rol_not= evalin('base','rol_not');
 
 % Stopping Criteria
-stopping_criteria= 0.05;   % Stop when Attractive Potential is at/lower than this value
+stopping_criteria= evalin('base','stopping_criteria');
 
 % Robot Size Alllowance
-robot_size_allowance= 1.5; % 150 cm
+robot_size_allowance= evalin('base','robot_size_allowance');
 
 
 %% Define Goal
-X_goal= [40 5]';
+X_goal= evalin('base','X_goal');
 
 
 %% Plot Attractive Potential
@@ -60,8 +56,7 @@ z_plot_att= 0.5 .* k_att .* ( (x_plot-X_goal(1)).^2 + (y_plot-X_goal(2)).^2 );
 
 
 %% Define Obstacle Positions
-obstacles= [ [14.87 33.28]' [32 30]' [19 19]' [34.49 17.25]' [27 18]' ];
-assignin('base', 'obstacles', obstacles);
+obstacles= evalin('base','obstacles');
 
 %% Plot Universal Potential
 
@@ -235,6 +230,7 @@ while 1
     iteration_count= iteration_count+1;
     % Check if maximum number of iterations has been reached
     if(iteration_count >= max_iterations)
+        fprintf('Number of maximum iterations reached\n')
         % break the forever loop
         break;
     end
@@ -266,6 +262,23 @@ while 1
     % Repeat Loop
     
 end
+
+
+% TARGET CONVERGENCE ADJUSTMENT
+% LOG FINAL POSITION AS LAST 5 POINTS ON TRAJECTORY TO ALLOW 2 EXTRA
+% TIMESTEPS FOR CONVERGENCE
+% iteration_count= 0;
+% 
+% while(iteration_count <= 5)
+%     
+%     trajectory(1:3,trajectory_index)= [(timestep*h) X_goal(1) X_goal(2)]';
+%     % Update timestep
+%     trajectory_index= trajectory_index + 1;
+%     timestep= timestep + 1;
+%     
+%     iteration_count= iteration_count+1;
+% end
+
 
 last_pos= plot3(X_robot(1), X_robot(2), Uuni, '*k', 'MarkerSize', 10);
 % Legend Robot Position

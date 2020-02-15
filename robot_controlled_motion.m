@@ -15,14 +15,15 @@ viscircles(obstacles', (obs_radius+zeros(1, size(obstacles, 2))));
 hold on
 
 %% PLOT REFERENCE
-reference_y= trajectory(3,:)';
-reference_x= trajectory(2,:)';
+reference_lon= trajectory(3,:)';
+reference_lat= trajectory(2,:)';
 
-plot(reference_x, reference_y);
+plot(reference_lat, reference_lon);
 
 
 %% PLOT OUTPUT
-assummed_output_y= trajectory(3,:)';
-output_x= sim_out.output{1}.Values.Data;
+output_lon= sim_out.output_lon{1}.Values.Data;
+output_lon= max(output_lon)-output_lon;
+output_lat= sim_out.output{1}.Values.Data;
 
-plot(output_x, assummed_output_y);
+plot(output_lat, output_lon);
