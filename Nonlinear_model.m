@@ -2,8 +2,8 @@ function [sys,x0,str,ts] = Nonlinear_model(t,x,u,flag)
 % This file is a s-function template for simulating the simple vehicle model in Simulink.
 
 % Choosing tire model
-%TireModel = VehicleDynamicsLateral.TireLinear();
-%TireModel.k= 40000;
+% TireModel = VehicleDynamicsLateral.TireLinear();
+% TireModel.k= 40000;
 TireModel = VehicleDynamicsLateral.TirePacejka();
 TireModel.a0 = 1;
 TireModel.a1 = 0;
@@ -113,11 +113,11 @@ sys = simsizes(sizes);
 % Velocity
 robot_vel= evalin('base','robot_vel');
 % Position
-robot_init_pos= evalin('base','robot_init_pos');
+robot_init_pos_sim= evalin('base','robot_init_pos_sim');
 % Yaw angle
 yaw_ang_init= evalin('base','yaw_ang_init');
 
-x0  = [robot_init_pos(2) robot_init_pos(1) yaw_ang_init robot_vel 0 0];
+x0  = [robot_init_pos_sim(1) robot_init_pos_sim(2) yaw_ang_init robot_vel 0 0];
 str = [];
 ts  = [0 0];
 

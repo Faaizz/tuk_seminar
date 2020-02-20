@@ -8,6 +8,8 @@ clc;
 
 
 %% SAMPLING TIME
+
+%h= 0.1;    Crashes into obstacle
 h= 0.05;
 
 
@@ -17,13 +19,18 @@ h= 0.05;
 robot_vel= 1;
 
 % Robot Initial Position
-robot_init_pos= [0 50]';
+robot_init_pos_path= [0 0]';
+%robot_init_pos_sim= robot_init_pos_path;
+robot_init_pos_sim= [0 0]';
 
 % Goal point
-X_goal= [40 5]';
+X_goal= [50 31]';
+%X_goal= 50.*[rand() rand()]';
 
 % Initial Yaw Angle
-yaw_ang_init= -0.0588+(pi/2);
+yaw_ang_init= 0;
+
+
 
 %% ROBOT MODEL PARAMETERS
 
@@ -52,7 +59,7 @@ l_r= 0.4125;
 %% TRAJECTORY PARAMETERS
 
 % Attractive Potential Constant
-k_att= 0.1;
+k_att= 0.01;
 
 % Repulsive Potential Constant
 k_rep= 10;
@@ -76,10 +83,10 @@ stopping_criteria= 0.001;   % Stop when Attractive Potential is at/lower than th
 robot_size_allowance= 1.5; % 150 cm
 
 % Obstacles (sharp corners)
-obstacles= [ [14.87 33.28]' [32 30]' [19 19]' [34.49 17.25]' [27 18]' ];
+obstacles= [ [14.87 33.28]' [10 8]' [26 12]' [19 19]' [34 23]' ];
 
 % Obstacles (mild corners)
-%obstacles= [ [14.87 33.28]' [32 30]' [19 19]' [34.49 17.25]'];
+%obstacles= [ [14.87 33.28]' [32 30]' [19 19]' [34.49 17.25]' [27 18]'];
 
 
 

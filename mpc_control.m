@@ -20,24 +20,29 @@ robot_sys_ss= c2d(robot_sys_ss, h);
 % Appropraite Subplot to plot for potential field and planned robot path
 % specified in robot_motion.m
 
-%trajectory= robot_motion(robot_vel, robot_init_pos, h);
-trajectory= trajectory_generator_apf(robot_vel, robot_init_pos, h);
+%trajectory= robot_motion(robot_vel, robot_init_pos_path, h);
+trajectory= trajectory_generator_apf(robot_vel, robot_init_pos_path, h);
 
 % Get lateral coordinates
-x_traj= trajectory(2,:);
+x_traj= trajectory(3,:);
 
 % Get time vector
 t_traj= trajectory(1,:);
 
 % Reference Trajectory
-ref_traj= timeseries(trajectory(2,:), trajectory(1,:), 'Name', 'reference_input');
+ref_traj= timeseries(trajectory(3,:), trajectory(1,:), 'Name', 'reference_input');
 
 
 %% MPC
 
 % Prediction horizon
-prediction_horizon= 150;
-control_horizon= 50;
+
+% Crashes into obstacle
+%prediction_horizon= 15;
+%control_horizon= 4;
+
+prediction_horizon= 25;
+control_horizon= 4;
 
 mpcobj = mpc(robot_sys_ss, h);
 mpcobj.PredictionHorizon= prediction_horizon;
@@ -55,7 +60,7 @@ mpcobj.ManipulatedVariables.Min= -max_u;
 mpcobj.ManipulatedVariables.Max= max_u;
 
 % Output weight
-%mpcobj.Weights.OutputVariables= 100;
+mpcobj.Weights.OutputVariables= 5;
 
 
 
@@ -70,9 +75,9 @@ mpcobj.ManipulatedVariables.Max= max_u;
 
 
 % Open simulink model
-open_system('dyn_mpc_control_sim.slx');
+%open_system('dyn_mpc_control_sim.slx');
 % Set simulation time
-set_param('dyn_mpc_control_sim', 'StopTime', string(max(t_traj)));
+%set_param('dyn_mpc_control_sim', 'StopTime', string(max(t_traj)));
 % Run simulation
 sim_out= sim('dyn_mpc_control_sim', max(t_traj));
 
@@ -80,9 +85,10 @@ sim_out= sim('dyn_mpc_control_sim', max(t_traj));
 
 
 %% PLOT CONTROLLED MOTION
-%robot_controlled_motion;
+lat_displacement_tracking;
 
 % Control signal
+% VehicleModel assigned from Nonlinear_model.m
 VehicleModel.deltaf= sim_out.control_signal{1}.Values.Data;
 
 simulator = VehicleDynamicsLateral.Simulator(VehicleModel, trajectory(1,:));
@@ -92,6 +98,8 @@ simulator.ALPHAT0 = 0;
 simulator.dPSI0 = 0;             
 simulator.V0= robot_vel; 
 simulator.PSI0= yaw_ang_init;
+simulator.X0= robot_init_pos_sim(2);
+simulator.Y0= robot_init_pos_sim(1);
 
 % Retrieving states from Simulink model
 simulator.XT = sim_out.states{1}.Values.Data;

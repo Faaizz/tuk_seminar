@@ -38,6 +38,7 @@ classdef VehicleSimpleLinear < VehicleDynamicsLateral.VehicleSimple
             FzF = self.mF0 * g;       % Vertical load @ F [N]
             FzR = self.mR0 * g;       % Vertical load @ R [N]
 
+            robot_vel= evalin('base','robot_vel');
             v0 = robot_vel;                  % [m/s]
 
             % State variables

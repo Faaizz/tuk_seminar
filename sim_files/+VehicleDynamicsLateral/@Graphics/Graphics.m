@@ -1,6 +1,7 @@
 classdef Graphics
     % Graphics Functions for graphics generation.
     %
+    % ALL ADDITIONS MADE BY ME (FAIZUDEEN) ARE PRECEEDED WITH THE COMMENT 'EDIT'
 
     methods
         % Constructor
@@ -95,7 +96,9 @@ classdef Graphics
             % Time adjustment
             % Exhibition has to be adjusted the number of frames is different from the resolution of the integrator (TSPAN)
 
-            TEMPO = 0:0.05:TOUT(end);
+            % EDIT: Animation Step
+            TEMPO = 0:0.2:TOUT(end);
+            %TEMPO = 0:0.05:TOUT(end);
 
             % Preallocating matrix
             rc1 = zeros(length(TEMPO),2);
@@ -169,9 +172,13 @@ classdef Graphics
             ax666=gca;
             set(ax666,'NextPlot','add')                 % hold on
 
+            % EDIT: Axes Description
             % Description
-            xlabel('Distance [m]');
-            ylabel('Distance [m]');
+            ylabel('Lateral Axis [m]');
+            xlabel('Longitudinal Axis [m]');
+            
+            %xlabel('Distance [m]');
+            %ylabel('Distance [m]');
 
             % First frame
 
@@ -519,8 +526,13 @@ classdef Graphics
             ax999=gca;
             set(ax999,'NextPlot','add')                 % hold on
 
-            xlabel('Distance [m]')
-            ylabel('Distance [m]')
+            % EDIT: Axes Description
+            % Description
+            ylabel('Lateral Axis [m]');
+            xlabel('Longitudinal Axis [m]');
+            
+            %xlabel('Distance [m]');
+            %ylabel('Distance [m]');
 
             TEMPOplot = 0:0.05:TOUT(end); % Time for the plots
             for i=1:length(TEMPOplot)
@@ -649,6 +661,15 @@ classdef Graphics
 
                 print(f999, '-dpdf', strcat(strcat(pathstr, '/', name), '.pdf'))
             end
+            
+            
+            % EDIT: Plot Obstacles
+            obstacles= evalin('base', 'obstacles');
+            obs_radius= evalin('base', 'obs_radius');
+            viscircles(obstacles', (obs_radius+zeros(1, size(obstacles, 2))), 'Color', 'b');
+            
+            
+            
         end
     end
 

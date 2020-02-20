@@ -160,6 +160,11 @@ end
 % array
 trajectory( :, all(~trajectory,1) )= [];
 
+% Insert starting point back into the trajectory (in case it is [0 0] and gets removed)
+if (robot_pos(1)==0) && (robot_pos(2)==0)
+    trajectory= [ [0 0 0]' trajectory ];
+end
+
 
 end
 

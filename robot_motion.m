@@ -129,8 +129,8 @@ end
 subplot(1, 2, 1);
 mesh(x_plot, y_plot, z_plot_uni);
 title('Universal Potential Field');
-xlabel("x-axis (fixed earth)");
-ylabel("y-axis (fixed earth)");
+xlabel("Longitudinal Axis (fixed earth)");
+ylabel("Lateral Axis (fixed earth)");
 hold on
 
 %% Robot Position
@@ -292,6 +292,13 @@ hold off
 % Set all zero columns to empty vectors, effectively removing them from the
 % array
 trajectory( :, all(~trajectory,1) )= [];
+
+
+% Insert starting point back into the trajectory (in case it is [0 0] and gets removed)
+if (robot_pos(1)==0) && (robot_pos(2)==0)
+    trajectory= [ [0 0 0]' trajectory ];
+end
+
 
 end
 
