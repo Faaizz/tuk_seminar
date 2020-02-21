@@ -12,7 +12,6 @@ function trajectory= trajectory_generator_apf(robot_vel, robot_pos, h)
 % robot_pos (2x1)- robot position
 % h- Sampling period
 
-
 %% Constant Definition
 
 % Attractive Potential Constant
@@ -43,9 +42,11 @@ X_goal= evalin('base','X_goal');
 
 %% Define Obstacle Positions
 obstacles= evalin('base','obstacles');
+
 % Get number of obstacles (number of columns of *obstacles*)
 size_of_obstacles= size(obstacles);
 no_of_obstacles= size_of_obstacles(2);
+
 
 %% Robot Position
 X_robot= robot_pos;
@@ -60,11 +61,11 @@ timestep= trajectory_index-1;
 
 %% Forever Loop
 
-% Initialize loop_counter
-loop_counter= 0;
+iteration_count= 0;
+max_iterations= 15000;
 
 while 1
-    
+   
     % Calculate Attractive Potential and Force
     Ua= 0.5 .* k_att .* (X_robot - X_goal)' * (X_robot - X_goal);
     %fprintf('Ua: %.2f\n', Ua);
@@ -124,6 +125,14 @@ while 1
         break;
     end
     
+    iteration_count= iteration_count+1;
+    % Check if maximum number of iterations has been reached
+    if(iteration_count >= max_iterations)
+        fprintf('Number of maximum iterations reached\n')
+        % break the forever loop
+        break;
+    end
+    
     % If stopping criteria is not satisfied, Evaluate Universal Force
     Funi= Fa + Fr;
     
@@ -141,29 +150,39 @@ while 1
     % Update timestep
     trajectory_index= trajectory_index + 1;
     timestep= timestep + 1;
-     
  
-    % If 2000 iterations have been performed without getting to the goal 
-    % point, set trajectory to zero and exit the loop
-    if(loop_counter >= 2000)
-        trajectory= zeros(3, 1000);
-        break;
-    end
-    
     % Repeat Loop
-    loop_counter= loop_counter + 1;
     
 end
+
+
+% TARGET CONVERGENCE ADJUSTMENT
+% LOG FINAL POSITION AS LAST 5 POINTS ON TRAJECTORY TO ALLOW 2 EXTRA
+% TIMESTEPS FOR CONVERGENCE
+% iteration_count= 0;
+% 
+% while(iteration_count <= 5)
+%     
+%     trajectory(1:3,trajectory_index)= [(timestep*h) X_goal(1) X_goal(2)]';
+%     % Update timestep
+%     trajectory_index= trajectory_index + 1;
+%     timestep= timestep + 1;
+%     
+%     iteration_count= iteration_count+1;
+% end
+
 
 
 % Set all zero columns to empty vectors, effectively removing them from the
 % array
 trajectory( :, all(~trajectory,1) )= [];
 
+
 % Insert starting point back into the trajectory (in case it is [0 0] and gets removed)
 if (robot_pos(1)==0) && (robot_pos(2)==0)
     trajectory= [ [0 0 0]' trajectory ];
 end
+
 
 
 end

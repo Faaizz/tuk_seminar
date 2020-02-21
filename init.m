@@ -42,11 +42,11 @@ I_zz= 808.5;
 
 % Front tyre cornering stiffness(N/deg)
 %C_f= 1420;
-C_f= 40000;
+C_f= 40e3;
 
 % Rear tyre cornering stiffness(N/deg)
 %C_r= 1420;
-C_r= 40000;
+C_r= 40e3;
 
 % Longitudinal distance of front wheel from center of mass(m)
 l_f= 0.35;
