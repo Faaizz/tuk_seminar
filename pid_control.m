@@ -6,6 +6,16 @@
 % X-AXIS: 0...50
 % Y_AXIS: 0...50
 
+%% INITIALIZE
+
+% Scenario 1
+%init_scen_1;
+
+% Scenario 2
+%init_scen_2;
+
+% Scenario 3
+init_scen_3;
 
 %% OBTAIN MODEL
 
@@ -59,7 +69,6 @@ sim_out= sim('dof_dyn_pid_control_sim', max(t_traj));
 
 
 %% PLOT CONTROLLED MOTION
-lat_displacement_tracking;
 robot_controlled_motion;
 
 % % Control signal

@@ -1,0 +1,68 @@
+% DOCUMENT
+\documentclass[a4paper, twocolumn]{article}
+
+% PACKAGES
+\usepackage[english]{babel}
+\usepackage{blindtext}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{parskip}
+\usepackage{mathptmx}
+\usepackage[none]{hyphenat}
+%\usepackage[showframe]{geometry}
+\usepackage{layout}
+
+% SETTINGS
+
+% USER-DEFINED COMMANDS
+
+% TITLE
+\title{\Huge{Path Tracking and Obstacle Avoidance of a Mobile Robot}}
+\author{Faizudeen Kajogbola} 
+\date{} %BLACK DATE TO  OMIT DATE FROM TITLE
+
+% DOCUMENT
+\begin{document}%\layout
+
+% DISPLAY TITLE
+\maketitle
+
+\setlength{\headsep}{5pt}
+\setlength{\voffset}{-0.75in}   % REMOVE EXCESSIVE SPACE AT TOP OF PAGE
+
+% INTRODUCTION
+\section{Introduction}
+
+Mobile robots are required to move around to perform some tasks, this makes the ability to navigate effectively and efficiently an important measure of success for any such robot.
+For navigation, a mobile robot is required to plan a path leading to its goal point, generate a trajectory along the planned path, and appropriately track the generated trajectory.
+
+Path planning involves the mobile robot searching for an optimal collision-free path from its initial position to some desired goal position which conforms to its physical constraints \cite{cai1}.
+Path planning is divided into: global path planning in which the environment known completely; and the local path planning in which only some section of the environment is known.
+Common global path planning techniques include A* heuristic search, visibility graph method, generalized Voronoi diagram, ant colony algorithm, genetic algorithm, and the artificial potential field method \cite{kunchev1, shi1}.
+
+The artificial potential field (APF) method draws inspiration from classical physics and was first proposed in 1986 by Khatib \cite{khatib1}.
+With this method, a mobile robot seems to move towards its goal position and avoid obstacles instinctively. This is because repulsive potentials are generated to represent obstacles while attractive potentials are generated to represent the goal position, effectively transforming the path planning into an optimization problem \cite{ji1}.
+APF gives room for the possibility of online path planning. Globally-planned path can be updated with local information from robot sensors-e.g. new location of a moving obstacle- in real-time, thereby making it possible to plan paths that avoids dynamic obstacles.
+This, and its mathematical conciseness \cite{shi1} are reasons why APF-based approaches are widely used in path planning fro mobile robots.
+However, if special care is not taken in formulating the potential functions, the robot might get stuck at a local minima and never reach its goal position.
+To prevent getting stuck at local minimum, several methods of formulating the potential functions have been proposed. These include Gaussian-shaped repulsive functions \cite{koditschek1}, the super-quadratic potential function \cite{volpe1}, simulated annealing technique \cite{zhu1}, and methods that utilize search techniques with the capability of escaping local minima \cite{barraquand1}.
+
+A trajectory can be generated from a planned path by time parametrization \cite{roesmann1}. To enable collision-free navigation, the generated trajectory must respect the dynamic and kinematic constraints of the mobile robot.
+Path tracking of mobile robots is generally performed using sliding mode control \cite{yang1}, robust control \cite{normey-rico1}, fuzzy logic control \cite{antonelli1}, or model predictive control \cite{ji1}.
+
+In recent years, a lot of research efforts have been poured into implementing model predictive control algorithms for navigation.
+Götte et al. in \cite{goette1} propose a model predictive planning and control (MPPC) approach which handles both trajectory planning and tracking.
+In \cite{nolte1}, Nolte et al. present a generalized approach for path and trajectory planning with model predictive frameworks.
+A contrained linear time-varying model predictive controller was implemented by Gutjahr et al. in \cite{gutjahr1} for path tracking and trajectory optimization.
+While a multiconstrained model predictive controller was presented by Ji et al. in \cite{ji1} solely for the purpose of path-tracking.
+
+In the following, path tracking and obstacle avoidance for an autonomous mobile robot is investigated.
+Avoidance of static obstacles in a completely known environment is considered, while taking the robot’s kinematic limitations (such as its size, shape, and its steering constraints) into account.
+An artificial potential field approach is used for online path planning and trajectory generation while a multi-constrained model predictive control is used for tracking the generated trajectory.
+
+
+\bibliographystyle{plain}
+\bibliography{references} 
+
+\end{document}
