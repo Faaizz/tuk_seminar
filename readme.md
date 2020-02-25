@@ -138,7 +138,7 @@ The PID controller performed quite well, yielding a scaled error norm of about 0
 
 The SIMO-based MPC was able to track the planned path with a scaled error norm of 0.3980. And as expected with an MPC with output constraints, the control signal produced was within a physically realizable limit.
 
-The SISO-based MPC albeit with a larger scaled error norm, was also able to take the AMR through the planned path with physically realizable control output.
+The SISO-based MPC albeit with a larger scaled error norm of about 0.4938, was also able to take the AMR through the planned path with physically realizable control output.
 
 
 #### Associated Scripts
