@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99d (TeX Live 2019/Debian)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: path_tracking_and_obstacle_avoidance.aux
+The style file: plain.bst
+Database file #1: references.bib
+Warning--can't use both volume and number fields in cai1
+Warning--can't use both author and editor fields in khatib1
+You've used 17 entries,
+            2118 wiz_defined-function locations,
+            614 strings with 7545 characters,
+and the built_in function-call counts, 7315 in all, are:
+= -- 701
+> -- 329
+< -- 14
++ -- 133
+- -- 112
+* -- 548
+:= -- 1123
+add.period$ -- 53
+call.type$ -- 17
+change.case$ -- 106
+chr.to.int$ -- 0
+cite$ -- 19
+duplicate$ -- 291
+empty$ -- 579
+format.name$ -- 112
+if$ -- 1608
+int.to.chr$ -- 0
+int.to.str$ -- 17
+missing$ -- 18
+newline$ -- 89
+num.names$ -- 34
+pop$ -- 110
+preamble$ -- 1
+purify$ -- 90
+quote$ -- 0
+skip$ -- 238
+stack$ -- 0
+substring$ -- 504
+swap$ -- 111
+text.length$ -- 14
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 66
+warning$ -- 2
+while$ -- 59
+width$ -- 19
+write$ -- 198
+(There were 2 warnings)

@@ -1,6 +1,7 @@
 *.asv
 *.autosave
 *.slxc
+.MATLAB*
 slprj/
 report/cheatsheet
 report/help
