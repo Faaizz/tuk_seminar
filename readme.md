@@ -151,4 +151,11 @@ The SISO-based MPC could not successfully control the AMR to track the reference
 - siso_mpc_control.m
 - simo_mpc_control.m 
 
-Images related to the scenarios can be found in the */report/img* folder. Images labelled with *pid* belong to the PID controller; *mpc1* to the SISO-based MPC; and *mpc2* to the SIMO-based MPC. Images labelled with *apf* show the universal artificial potential field used for path planning.     
+Images related to the scenarios can be found in the */report/img* folder. Images labelled with *pid* belong to the PID controller; *mpc1* to the SISO-based MPC; and *mpc2* to the SIMO-based MPC. Images labelled with *apf* show the universal artificial potential field used for path planning.    
+
+
+--------------------------------------------------------
+
+### REPORT
+
+A full fledged report of the seminar work can be found under */report/report.pdf*.
