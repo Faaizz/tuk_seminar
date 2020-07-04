@@ -85,12 +85,18 @@ figure
 % Yaw Angle
 subplot(2, 1, 1);
 
-yaw_angle= sim_out.states{3}.Values.Data;
+% Yaw Angle Reference
+yaw_ang_ref= yaw_ang;
 
-plot(reference_time, yaw_angle, 'Color', 'b', 'LineWidth', 1.5);
+% Plot Reference
+plot(reference_time, yaw_ang_ref, 'LineStyle', '--', 'LineWidth', 1.5);
+hold on
+% Plot Output
+yaw_angle= sim_out.states{3}.Values.Data;
+plot(reference_time, yaw_angle, 'Color', 'r', 'LineWidth', 1.5);
 xlabel('Time(s)');
 ylabel('Yaw Angle(rad)');
-legend('yaw angle');
+legend('reference', 'output');
 title('Time Plot of Yaw Angle');
 
 % Yaw Rate
@@ -98,7 +104,7 @@ subplot(2, 1, 2);
 
 yaw_rate= sim_out.states{6}.Values.Data;
 
-plot(reference_time, yaw_rate, 'Color', 'r', 'LineWidth', 1.5);
+plot(reference_time, yaw_rate, 'Color', 'b', 'LineWidth', 1.5);
 xlabel('Time(s)');
 ylabel('Yaw Velocity(rad/sec)');
 legend('yaw velocity');

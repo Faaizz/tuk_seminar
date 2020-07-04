@@ -10,10 +10,10 @@
 %% INITIALIZE
 
 % Scenario 1
-init_scen_1;
+%init_scen_1;
 
 % Scenario 2
-% init_scen_2;
+init_scen_2;
 
 % Scenario 3
 %init_scen_3;
@@ -98,36 +98,4 @@ sim_out= sim('dof_dyn_mpc_control_sim', max(t_traj));
 
 %% PLOT CONTROLLED MOTION
 robot_controlled_motion;
-
-
-
-% Control signal
-% VehicleModel assigned from Nonlinear_model.m
-%VehicleModel.deltaf= sim_out.control_signal{1}.Values.Data;
-% 
-% simulator = VehicleDynamicsLateral.Simulator(VehicleModel, trajectory(1,:));
-% 
-% % Setup initial conditions
-% simulator.ALPHAT0 = 0;           
-% simulator.dPSI0 = 0;             
-% simulator.V0= robot_vel; 
-% simulator.PSI0= yaw_ang_init;
-% simulator.X0= robot_init_pos_sim(2);
-% simulator.Y0= robot_init_pos_sim(1);
-% 
-% % Retrieving states from Simulink model
-% simulator.XT = sim_out.states{1}.Values.Data;
-% simulator.YT = sim_out.states{2}.Values.Data;
-% simulator.PSI = sim_out.states{3}.Values.Data;
-% simulator.VEL = sim_out.states{4}.Values.Data;
-% simulator.ALPHAT = sim_out.states{5}.Values.Data;
-% simulator.dPSI = sim_out.states{6}.Values.Data;
-% 
-% 
-% g = VehicleDynamicsLateral.Graphics(simulator);
-% g.TractorColor = 'r';
-% 
-% g.Frame();
-%g.Animation();
-
 

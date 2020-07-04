@@ -5,3 +5,12 @@
 slprj/
 report/cheatsheet
 report/help
+
+# Latex files
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.*

@@ -19,11 +19,11 @@ An attractive potential is setup such that its minimum is at the goal position, 
 
 The attractive potential used in this study is given as:
 
-![equation](https://latex.codecogs.com/gif.latex?U_%7BA%7D%3A%3D%20%5Cfrac%7B1%7D%7B2%7D%20K_%7Batt%7D%20%7B%5Cleft%20%5C%7C%20%5Cvec%7BX%7D%20-%20%5Cvec%7BX_%7Bgoal%7D%7D%20%5Cright%20%5C%7C%7D%5E%7B2%7D)
+![equation](https://latex.codecogs.com/gif.download?U_%7BA%7D%28%5Cvec%7BX_%7Br%7D%7D%2C%20%5Cvec%7BX_%7Bg%7D%7D%29%3A%3D%20%5Cfrac%7B1%7D%7B2%7D%20K_%7Batt%7D%20%7B%5Cbegin%7BVmatrix%7D%5Cvec%7BX_%7Br%7D%7D%20-%20%5Cvec%7BX_%7Bg%7D%7D%5Cend%7BVmatrix%7D%7D%5E%7B2%7D)
 
 The repulsive potential is given as:
 
-![equation](https://latex.codecogs.com/gif.latex?U_%7BR%7D%3A%3D%20%5Cfrac%7B1%7D%7B2%7D%20K_%7Brep%7D%20%5Cleft%28%20%7B%5Cfrac%7B1%7D%7B%5Cleft%20%5C%7C%20%5Cvec%7BX%7D%20-%20%5Cvec%7BX_%7Bobs%7D%7D%20%5Cright%20%5C%7C%7D%7D%20-%20%5Cfrac%7B1%7D%7Bp_0%7D%20%5Cright%20%29%5E%7B2%7D)
+![equation](https://latex.codecogs.com/gif.download?U_%7BR%7D%28%5Cvec%7BX_%7Br%7D%7D%2C%20%5Cvec%7BX_%7Bo%7D%7D%29%3A%3D%20%5Cbegin%7Bcases%7D%20%5Cfrac%7B1%7D%7B2%7D%20K_%7Brep%7D%20%7B%5Cleft%28%20%5Cfrac%7B1%7D%7B%5Cbegin%7BVmatrix%7D%5Cvec%7BX_%7Br%7D%7D%20-%20%5Cvec%7BX_%7Bo%7D%7D%5Cend%7BVmatrix%7D%7D%20-%20%5Cfrac%7B1%7D%7B%5Crho_%7B0%7D%7D%20%5Cright%29%7D%5E%7B2%7D%3B%20%26%20%5Ctext%7Bif%7D%5C%20%5Cbegin%7BVmatrix%7D%5Cvec%7BX_%7Br%7D%7D%20-%20%5Cvec%7BX_%7Bo%7D%7D%5Cend%7BVmatrix%7D%3C%20%5Crho_%7B0%7D%20%5C%5C%200%3B%20%26%20%5Ctext%7Botherwise%7D%20%5Cend%7Bcases%7D)
 
 where: 
 
@@ -87,7 +87,7 @@ Two variants of the model are specified, the first is a SISO model with the fron
 
 ### CONTROLLER DESIGN
 
-Three different controllers were designed during the course of this study. While the main focus is on model predictive control (MPC), a PID controller was also designed as juxtaposing mechanism. Two MPC controllers were designed, one using the SISO model and the other using the SIMO model of the AMR.
+Three different controllers were designed during the course of this study. While the main focus is on model predictive control (MPC), a PID controller was also designed as a juxtaposing mechanism. Two MPC controllers were designed, one using the SISO model and the other using the SIMO model of the AMR.
 
 #### PID Controller
 The PID controller was designed using MATLAB's pidTuner tool. This model can be viewed in *pid_control_sim.slx*.
@@ -115,7 +115,7 @@ The MPCs were designed using the [MPC Controller](https://www.mathworks.com/help
 
 ### SIMULATION
 
-Extensive simulations were carried out on the effects of the designed controllers on a non-linear vehicle model. The [Vehicle Body 3DOF Single Track](https://www.mathworks.com/help/releases/R2019b/vdynblks/ref/vehiclebody3dof.html) model from Simulink's Vehicle Dynamics Blockset was used for simulations. In all simulation scenarios, perfect tracking of the AMR's longitudinal position is assumed since this study focuses on lateral displacement control. Hence, the refrence signal is the lateral position trajectory produced by the APF path planning algorithm. In addition to the lateral position reference, the yaw angle reference is also provided as reference for the SIMO-based MPC. 
+Extensive simulation was carried out to examine the effects of the designed controllers on a representative model of the Autonomous Mobile Robot (AMR). The [Vehicle Body 3DOF Single Track](https://www.mathworks.com/help/releases/R2019b/vdynblks/ref/vehiclebody3dof.html) model from Simulink's Vehicle Dynamics Blockset was used for simulations. In all simulation scenarios, perfect tracking of the AMR's longitudinal position is assumed since this study focuses on lateral displacement control. Hence, the refrence signal is the lateral position trajectory produced by the APF path planning algorithm. In addition to the lateral position reference, the yaw angle reference is also provided as reference for the SIMO-based MPC. 
 
 Performance of the controllers are compared on the basis of a scaled error norm which is the *L2* norm of the error at each sampling instance divided by the number of samples.
 

@@ -21,7 +21,7 @@ robot_vel= 1;
 % Robot Initial Position
 robot_init_pos_path= [0 0]';
 %robot_init_pos_sim= robot_init_pos_path;
-robot_init_pos_sim= [0 0]';
+robot_init_pos_sim= [0 1]';
 
 % Goal point
 X_goal= [50 31]';
@@ -40,11 +40,11 @@ mass= 505;
 % Yaw mass moment of Inertia(kg.m^2)
 I_zz= 808.5;
 
-% Front tyre cornering stiffness(N/deg)
+% Front tyre cornering stiffness(N/rad)
 %C_f= 1420;
 C_f= 40e3;
 
-% Rear tyre cornering stiffness(N/deg)
+% Rear tyre cornering stiffness(N/rad)
 %C_r= 1420;
 C_r= 40e3;
 
@@ -68,7 +68,7 @@ k_rep= 10;
 obs_radius= 1;
 
 % Maximum Longitudinal Velocity
-V_MAX= robot_vel*3;  % m/sec
+V_MAX= robot_vel*2;  % m/sec
 
 % Maximum Longitudinal Deceleration
 A_MAX= 0.2;   % m/sec^2

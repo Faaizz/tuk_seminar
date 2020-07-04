@@ -12,10 +12,10 @@
 %init_scen_1;
 
 % Scenario 2
-%init_scen_2;
+init_scen_2;
 
 % Scenario 3
-init_scen_3;
+%init_scen_3;
 
 
 %% OBTAIN MODEL
