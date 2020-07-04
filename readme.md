@@ -108,7 +108,8 @@ The MPCs were designed using the [MPC Controller](https://www.mathworks.com/help
 
 #### Associated Scripts
 - pid_control.m
-- mpc_control.m
+- siso_mpc_control.m
+- simo_mpc_control.m
 
 
 --------------------------------------------------------
@@ -123,15 +124,9 @@ Performance of the controllers are compared on the basis of a scaled error norm 
 In this simulation scenario, a goal position of (50, 31) was set and obstacles were placed at (14.87, 33.28),  (10, 8), (26, 12), (19, 19), and (34, 23). The trajectory generator generated a suitable trajectory that avoids all known obstacles and assumes the AMR is at an initial position of (0, 0). The two MPCs were simulated with a sampling time of 0.05 seconds, while the PID controller was simulated with a sampling time of 0.01 seconds.  
 
 In this scenario, the PID controller performed best, with a negligible scaled error norm of 0.0022. Next in line, although by a very thin margin is the SIMO-based MPC controller with a scaled error norm of 0.3647. And finally, comes the SISO-based MPC with an error norm of 0.4713. All three controllers provided control signals which are physically realizable. 
+  
 
 #### SCENARIO 2
-The same goal position and obstacle positions from scenario 1 are used. However, the initial position of the AMR was offset by an error, such that the new initial position was (0, 1) while the path planning algorithm still planed a trajectory that assumed an initial position of (0, 0). The path planning parameters were tweaked a little, such that the region of influence of the obstacles were increased.  
-
-Like scenario 1, the PID controller had a lower scaled error norm in this scenario also (about 0.0579). Under the influence of the PID controller, the AMR quickly converged to and strictly followed the reference signal. However, the control signals it generated look impossible to implement in a real life situation. It produced wheel angles with magnitude as high as 120 radians.
-
-The SISO-based MPC could not successfully control the AMR to track the reference in this scenario. It produced a scaled error norm of about 14.55. *The perfect longitudinal displacement tracking was ommited for this particular case and the actual longitudinal output of the simulation model was used such that the movement of the AMR in circles is evident*. However, by increasing the prediction horizon to 35 time steps (from 25), the SISO MPC was able to control the AMR to converge to, and track the reference with a scaled error norm of 0.7093.  
-
-#### SCENARIO 3
 The same goal point and obstacle positions from the 2 previous scenarios are retained. Also, the initial position of the AMR is put back at (0, 0). The path planning parameters are modified to further increase the region of influence of the obstacles and change the course of the AMR's travel.  
 
 The PID controller performed quite well, yielding a scaled error norm of about 0.0044. However, the control signal generated cannot be physically realized. The required front wheel angle attained a magnitude of about 5 radians at some point.  
@@ -140,12 +135,20 @@ The SIMO-based MPC was able to track the planned path with a scaled error norm o
 
 The SISO-based MPC albeit with a larger scaled error norm of about 0.4938, was also able to take the AMR through the planned path with physically realizable control output.
 
+#### SCENARIO 2
+The same goal position and obstacle positions from scenario 1 are used. However, the initial position of the AMR was offset by an error, such that the new initial position was (0, 1) while the path planning algorithm still planed a trajectory that assumed an initial position of (0, 0). The path planning parameters were tweaked a little, such that the region of influence of the obstacles were increased.  
+
+Like scenario 1, the PID controller had a lower scaled error norm in this scenario also (about 0.0579). Under the influence of the PID controller, the AMR quickly converged to and strictly followed the reference signal. However, the control signals it generated look impossible to implement in a real life situation. It produced wheel angles with magnitude as high as 120 radians.
+
+The SISO-based MPC could not successfully control the AMR to track the reference in this scenario. It produced a scaled error norm of about 14.55. *The perfect longitudinal displacement tracking was ommited for this particular case and the actual longitudinal output of the simulation model was used such that the movement of the AMR in circles is evident*. However, by increasing the prediction horizon to 35 time steps (from 25), the SISO MPC was able to control the AMR to converge to, and track the reference with a scaled error norm of 0.7093.
+
 
 #### Associated Scripts
 - init_scen_1.m
 - init_scene_2.m
 - init_scene_3.m
-- mpc_control.m
-- pid_control.m  
+- pid_control.m 
+- siso_mpc_control.m
+- simo_mpc_control.m 
 
 Images related to the scenarios can be found in the */report/img* folder. Images labelled with *pid* belong to the PID controller; *mpc1* to the SISO-based MPC; and *mpc2* to the SIMO-based MPC. Images labelled with *apf* show the universal artificial potential field used for path planning.     

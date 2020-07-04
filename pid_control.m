@@ -30,9 +30,6 @@ robot_sys_ss= c2d(robot_sys_ss, h);
 
 %% OBTAIN TRAJECTORY
 
-% Appropraite Subplot to plot for potential field and planned robot path
-% specified in robot_motion.m
-
 %trajectory= robot_motion(robot_vel, robot_init_pos_path, h);
 trajectory= trajectory_generator_apf(robot_vel, robot_init_pos_path, h);
 
@@ -48,28 +45,13 @@ ref_traj= timeseries(trajectory(3,:), trajectory(1,:), 'Name', 'reference_input'
 
 %% SIMULATE SYSTEM RESPONSE (STATE SPACE)
 
-% % Open simulink model
-% open_system('pid_control_sim.slx');
-% % Set simulation time
-% set_param('pid_control_sim', 'StopTime', string(max(t_traj)));
-% % Run simulation
-% sim_out_lin= sim('pid_control_sim', max(t_traj));
-
-
-% Open simulink model
-%open_system('pid_control_sim.slx');
-%open_system('dyn_pid_control_sim.slx');
-% Set simulation time
-%set_param('pid_control_sim', 'StopTime', string(max(t_traj)));
-%set_param('dyn_pid_control_sim', 'StopTime', string(max(t_traj)));
 % Run simulation
-%sim_out= sim('pid_control_sim', max(t_traj));
 sim_out= sim('dof_dyn_pid_control_sim', max(t_traj));
 
 
 
 %% PLOT CONTROLLED MOTION
-robot_controlled_motion;
+robot_motion_plot;
 
 
 
